@@ -72,6 +72,9 @@ func play_intro() -> void:
 	tween.set_ease(INTRO_EASE) # Updating the Tween's easing.
 	tween.set_trans(INTRO_TRANS) # Updating the Tween's transition.
 	
+	# Set paused mode for Tween.
+	tween.set_pause_mode(EzTransitions.plugin_paused_mode)
+	
 	# Tweening the "progress" property.
 	tween.tween_property(material, "shader_parameter/progress", 1.0 if (!REVERSE_INTRO) else 0.0, INTRO_DURATION / EzTransitions.plugin_speed_scale)
 	
@@ -100,6 +103,9 @@ func play_outro() -> void:
 	# Setting up the new Tween.
 	tween.set_ease(OUTRO_EASE) # Updating the Tween's easing.
 	tween.set_trans(OUTRO_TRANS) # Updating the Tween's transition.
+	
+	# Set paused mode for Tween.
+	tween.set_pause_mode(EzTransitions.plugin_paused_mode)
 	
 	# Tweening the "progress" property.
 	tween.tween_property(material, "shader_parameter/progress", 1.0 if (REVERSE_OUTRO) else 0.0, OUTRO_DURATION / EzTransitions.plugin_speed_scale)
