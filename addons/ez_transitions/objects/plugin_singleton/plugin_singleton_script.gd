@@ -6,6 +6,7 @@ extends CanvasLayer
 var plugin_transitions_enabled: bool = true
 var plugin_debug_mode: bool = true
 var plugin_speed_scale: float = 1.0
+var plugin_paused_mode: Tween.TweenPauseMode = Tween.TWEEN_PAUSE_PROCESS
 
 # Variables:
 var TRANSITION_OVERLAY: TransitionOverlay
@@ -41,6 +42,12 @@ func plugin_set_speed_scale(new_speed_scale: float) -> void:
 	plugin_speed_scale = new_speed_scale
 	if (plugin_debug_mode): # Checking if the plugin's debug mode is enabled.
 		print_rich("[color=red]Successfully updated EzTransitions speed scale. New value: %s" % str(new_speed_scale)) # Debug print.
+
+func plugin_set_paused_mode(new_paused_mode: Tween.TweenPauseMode) -> void:
+	# Sets the plugin's speed scale to the given value.
+	plugin_paused_mode = new_paused_mode
+	if (plugin_debug_mode): # Checking if the plugin's debug mode is enabled.
+		print_rich("[color=red]Successfully updated EzTransitions paused mode. New value: %s" % str(new_paused_mode)) # Debug print.
 	
 func set_easing(intro_ease: Tween.EaseType, outro_ease: Tween.EaseType) -> void:
 	# Updates the TransitionOverlay's intro and outro easing.
