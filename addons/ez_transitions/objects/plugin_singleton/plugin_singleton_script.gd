@@ -97,3 +97,40 @@ func change_scene(target_scene_path: String) -> void:
 	
 	# Playing the outro.
 	TRANSITION_OVERLAY.play_outro()
+
+func change_scene_packed(target_packed_scene: PackedScene) -> void:
+	# Check if the packed scene is null to avoid errors
+	if (target_packed_scene == null):
+
+		if (plugin_debug_mode): # Checking if the plugin's debug mode is enabled.
+			print_rich("[color=red]Attempted to change to null packed scene") # Debug print.
+
+		return # Stopping the code right here.
+
+	# Skipping the transition if the transitions aren't enabled.
+	if (!plugin_transitions_enabled): # Checking if the transitions are enabled or not.
+		get_tree().change_scene_to_packed(target_packed_scene) # Changing scene.
+
+		if (plugin_debug_mode): # Checking if the plugin's debug mode is enabled.
+			print_rich("[color=red]Transitions disabled! Skipping the transition and changing scene to: %s" % [
+				target_packed_scene.resource_path
+			]) # Debug print.
+
+		return # Stopping the code right here.
+
+	if (plugin_debug_mode): # Checking if the plugin's debug mode is enabled.
+		print_rich("[color=red]Transition started. About to change scene to: %s" % [
+				target_packed_scene.resource_path
+			]) # Debug print.
+
+	# Changes scene using the TransitionOverlay.
+	TRANSITION_OVERLAY.play_intro() # Playing the intro.
+
+	# Changing scene.
+	await TRANSITION_OVERLAY.intro_finished # Waiting until the intro has finished playing.
+	await get_tree().create_timer(TRANSITION_OVERLAY.DELAY_TO_PROCEED).timeout # Waiting the extra time.
+
+	get_tree().change_scene_to_packed(target_packed_scene) # Actually changing scene.
+
+	# Playing the outro.
+	TRANSITION_OVERLAY.play_outro()
